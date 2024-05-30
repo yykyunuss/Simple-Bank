@@ -1,6 +1,5 @@
 package com.eteration.simplebanking.model;
 
-import com.eteration.simplebanking.exception.BankAccounNotFoundException;
 import com.eteration.simplebanking.exception.InsufficientBalanceException;
 import lombok.*;
 

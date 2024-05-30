@@ -11,4 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class TransactionRequest {
     private double amount;
+    private String payee;
 }

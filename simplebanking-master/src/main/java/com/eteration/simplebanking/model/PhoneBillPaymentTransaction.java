@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("BillPayment")
-public class PhoneBillPaymentTransaction extends Transaction {
+public class PhoneBillPaymentTransaction extends WithdrawalTransaction {
     private String payee;
 
     public PhoneBillPaymentTransaction() {

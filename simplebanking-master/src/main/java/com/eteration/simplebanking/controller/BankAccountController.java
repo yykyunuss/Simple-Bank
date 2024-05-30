@@ -3,7 +3,6 @@ package com.eteration.simplebanking.controller;
 import com.eteration.simplebanking.exception.BankAccounNotFoundException;
 import com.eteration.simplebanking.exception.InsufficientBalanceException;
 import com.eteration.simplebanking.model.*;
-import com.eteration.simplebanking.repository.TransactionRepository;
 import com.eteration.simplebanking.request.TransactionRequest;
 import com.eteration.simplebanking.response.TransactionResponse;
 import com.eteration.simplebanking.services.BankAccountService;
@@ -16,9 +15,6 @@ import org.springframework.web.bind.annotation.*;
 public class BankAccountController {
     @Autowired
     private BankAccountService bankAccountService;
-
-    @Autowired
-    private TransactionRepository transactionRepository;
 
     @PostMapping("/create-account")
     public ResponseEntity<BankAccount> saveAccount(@RequestBody BankAccount newAccount) {
@@ -39,6 +35,11 @@ public class BankAccountController {
     @PostMapping("/debit/{accountNumber}")
     public ResponseEntity<TransactionResponse> debitAccount(@PathVariable String accountNumber, @RequestBody TransactionRequest request) throws InsufficientBalanceException {
         return bankAccountService.debitAccount(accountNumber, request);
+    }
+
+    @PostMapping("/phone-bill-payment/{accountNumber}")
+    public ResponseEntity<TransactionResponse> phoneBillPayment(@PathVariable String accountNumber, @RequestBody TransactionRequest request) throws InsufficientBalanceException {
+        return bankAccountService.phoneBillPayment(accountNumber, request);
     }
 
 }

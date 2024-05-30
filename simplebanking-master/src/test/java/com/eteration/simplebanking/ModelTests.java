@@ -1,7 +1,5 @@
 package com.eteration.simplebanking;
 
-
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -13,7 +11,7 @@ import com.eteration.simplebanking.model.WithdrawalTransaction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class ModelTest {
+public class ModelTests {
 	
 	@Test
 	public void testCreateAccountAndSetBalance0() {

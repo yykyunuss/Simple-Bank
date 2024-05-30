@@ -3,6 +3,7 @@ package com.eteration.simplebanking.services;
 import com.eteration.simplebanking.model.BankAccount;
 import com.eteration.simplebanking.model.DepositTransaction;
 import com.eteration.simplebanking.exception.InsufficientBalanceException;
+import com.eteration.simplebanking.model.PhoneBillPaymentTransaction;
 import com.eteration.simplebanking.model.WithdrawalTransaction;
 import com.eteration.simplebanking.repository.BankAccountRepository;
 import com.eteration.simplebanking.repository.TransactionRepository;
@@ -61,6 +62,23 @@ public class BankAccountService {
         account.post(withdrawalTransaction);
 
         transactionRepository.save(withdrawalTransaction);
+        bankAccountRepository.save(account);
+
+        return ResponseEntity.ok(new TransactionResponse("OK", UUID.randomUUID().toString()));
+    }
+
+    public ResponseEntity<TransactionResponse> phoneBillPayment(String accountNumber, TransactionRequest request) throws InsufficientBalanceException {
+        Optional<BankAccount> accountOpt = bankAccountRepository.findByAccountNumber(accountNumber);
+        if (!accountOpt.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        BankAccount account = accountOpt.get();
+        PhoneBillPaymentTransaction phoneBillPaymentTransaction = new PhoneBillPaymentTransaction(request.getAmount(), request.getPayee());
+
+        account.post(phoneBillPaymentTransaction);
+
+        transactionRepository.save(phoneBillPaymentTransaction);
         bankAccountRepository.save(account);
 
         return ResponseEntity.ok(new TransactionResponse("OK", UUID.randomUUID().toString()));

@@ -2,6 +2,7 @@ package com.eteration.simplebanking.model;
 
 import com.eteration.simplebanking.exception.InsufficientBalanceException;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -18,6 +19,8 @@ public abstract class Transaction {
     private Long id;
 
     private LocalDateTime date;
+
+    @NonNull
     private double amount;
 
     @ManyToOne
