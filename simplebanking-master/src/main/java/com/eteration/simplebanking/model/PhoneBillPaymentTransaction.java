@@ -1,22 +1,24 @@
 package com.eteration.simplebanking.model;
 
-
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("Withdrawal")
-public class WithdrawalTransaction extends Transaction {
-    public WithdrawalTransaction() {
+@DiscriminatorValue("BillPayment")
+public class PhoneBillPaymentTransaction extends Transaction {
+    private String payee;
+
+    public PhoneBillPaymentTransaction() {
     }
 
-    public WithdrawalTransaction(double amount) {
+    public PhoneBillPaymentTransaction(double amount, String payee) {
         super(amount);
+        this.payee = payee;
     }
 
     @Override
     public void apply(BankAccount account) {
         account.setBalance(account.getBalance() - getAmount());
     }
-}
 
+}
