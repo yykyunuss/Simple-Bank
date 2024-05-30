@@ -2,11 +2,12 @@ package com.eteration.simplebanking;
 
 
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.eteration.simplebanking.model.BankAccount;
 import com.eteration.simplebanking.model.DepositTransaction;
-import com.eteration.simplebanking.model.InsufficientBalanceException;
+import com.eteration.simplebanking.exception.InsufficientBalanceException;
 import com.eteration.simplebanking.model.WithdrawalTransaction;
 
 import org.junit.jupiter.api.Assertions;
@@ -14,19 +15,20 @@ import org.junit.jupiter.api.Test;
 
 public class ModelTest {
 	
-	/*@Test
+	@Test
 	public void testCreateAccountAndSetBalance0() {
 		BankAccount account = new BankAccount("Kerem Karaca", "17892");
-		assertTrue(account.getOwner().equals("Kerem Karaca"));
-		assertTrue(account.getAccountNumber().equals("17892"));
-		assertTrue(account.getBalance() == 0);
+        assertEquals("Kerem Karaca", account.getOwner());
+        assertEquals("17892", account.getAccountNumber());
+        assertEquals(0, account.getBalance());
 	}
 
 	@Test
 	public void testDepositIntoBankAccount() {
 		BankAccount account = new BankAccount("Demet Demircan", "9834");
 		account.deposit(100);
-		assertTrue(account.getBalance() == 100);
+		account.deposit(47);
+		assertTrue(account.getBalance() == 147);
 	}
 
 	@Test
@@ -45,7 +47,6 @@ public class ModelTest {
 			account.deposit(100);
 			account.withdraw(500);
 		  });
-
 	}
 	
 	@Test
@@ -67,5 +68,5 @@ public class ModelTest {
 		account.post(withdrawalTrx);
 		assertTrue(account.getBalance() == 40);
 		assertTrue(account.getTransactions().size() == 2);
-	}*/
+	}
 }

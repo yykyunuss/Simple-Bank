@@ -1,7 +1,9 @@
 package com.eteration.simplebanking.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.eteration.simplebanking.exception.BankAccounNotFoundException;
+import com.eteration.simplebanking.exception.InsufficientBalanceException;
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,34 +11,45 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@RequiredArgsConstructor
+@NoArgsConstructor(force = true)
 public class BankAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NonNull
     private String owner;
+
+    @NonNull
     private String accountNumber;
+
     private double balance;
 
-    @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Transaction> transactions = new ArrayList<>();
 
-    // Constructors, getters, and setters
-
-    public BankAccount() {
-    }
-
-    /*public BankAccount(String owner, String accountNumber) {
-        this.owner = owner;
-        this.accountNumber = accountNumber;
-        this.balance = 0.0;
-    }*/
-
-    public void post(Transaction transaction) {
+    public void post(Transaction transaction) throws InsufficientBalanceException {
         transactions.add(transaction);
         transaction.setBankAccount(this);
         transaction.apply(this);
     }
 
-    // credit and debit methods
+    public void deposit(double amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Deposit amount must be greater than zero");
+        }
+        this.balance = this.balance + amount;
+    }
+
+    public void withdraw(double amount) throws InsufficientBalanceException {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Withdrawal amount must be greater than zero");
+        }
+        if (this.balance < amount) {
+            throw new InsufficientBalanceException("Insufficient balance for withdrawal");
+        }
+        this.balance = this.balance - amount;
+    }
 }

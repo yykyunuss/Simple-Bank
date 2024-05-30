@@ -1,11 +1,17 @@
 package com.eteration.simplebanking.model;
 
+import com.eteration.simplebanking.exception.InsufficientBalanceException;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "transaction_type")
+@Getter
+@Setter
 public abstract class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +32,7 @@ public abstract class Transaction {
         this.amount = amount;
     }
 
-    public abstract void apply(BankAccount account);
+    public abstract void apply(BankAccount account) throws InsufficientBalanceException;
 
     public void setBankAccount(BankAccount bankAccount){
         this.bankAccount = bankAccount;
