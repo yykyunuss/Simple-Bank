@@ -4,6 +4,7 @@ import com.eteration.simplebanking.exception.InsufficientBalanceException;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,8 @@ public class BankAccount {
     private String accountNumber;
 
     private double balance;
+
+    private LocalDateTime createDate = LocalDateTime.now();
 
     @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Transaction> transactions = new ArrayList<>();

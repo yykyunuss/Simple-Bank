@@ -65,7 +65,7 @@ public class BankAccountControllerTest {
     void testFindAccount_Success() throws Exception {
         when(bankAccountService.findAccount(anyString())).thenReturn(ResponseEntity.ok(bankAccount));
 
-        mockMvc.perform(get("/account/v1/find-account/12345")
+        mockMvc.perform(get("/account/v1/12345")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.accountNumber").value("12345"));

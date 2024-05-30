@@ -22,7 +22,7 @@ public class BankAccountController {
         return ResponseEntity.ok(bankAccount);
     }
 
-    @GetMapping("/find-account/{accountNumber}")
+    @GetMapping("/{accountNumber}")
     public ResponseEntity<BankAccount> findAccount(@PathVariable String accountNumber) throws BankAccounNotFoundException {
         return bankAccountService.findAccount(accountNumber);
     }
